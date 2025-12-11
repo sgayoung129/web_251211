@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홍길동 | 프론트엔드 개발자 포트폴리오</title>
+
+    <!-- 
+      폰트 시스템 (Modern Sans Font System)
+      - 영문: Inter
+      - 한글: Pretendard
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <style>
+        /*
+          --- 2025-11-06 UI 디자인 시스템 적용 ---
+          1. Sunset Orange 컬러 시스템
+          2. Modern Sans 폰트 시스템
+          3. Mobile First 반응형 전략
+          4. 블로그/아티클 레이아웃 (중앙 컨테이너)
+          5. Rounded Soft 컴포넌트 스타일
+          6. Scale Transform 인터랙션
+          7. CSS Grid Modern 그리드 시스템
+        */
+
+        :root {
+            /* 1. Sunset Orange 컬러 시스템 */
+            --primary: #FF6B35;
+            --secondary: #F7931E;
+            --accent: #FFD23F;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --bg-light: #fef7ed; /* Gray-50 */
+            --text-dark: #1c1917; /* Gray-900 */
+            
+            /* 2. Modern Sans 폰트 시스템 */
+            --font-en: 'Inter', system-ui, sans-serif;
+            --font-ko: 'Pretendard', system-ui, sans-serif;
+
+            /* 6. Rounded Soft 컴포넌트 스타일 */
+            --radius-soft: 12px;
+            --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 3. Mobile First 반응형 전략 (기본 스타일) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            
+            /* 2. Modern Sans 폰트 시스템: 16px 기준, 1.6 행간 */
+            font-family: var(--font-ko);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            
+            /* 모바일 패딩 */
+            padding: 1rem;
+        }
+
+        /* --- 타이포그래피 (가독성 최적화) --- */
+        h1, h2, h3, h4, h5, h6, [lang="en"] {
+            font-family: var(--font-en); /* 제목과 영문은 Inter */
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem; /* 16 * 1.25^4 (약 2.44) */
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 1.95rem; /* 16 * 1.25^3 */
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.56rem; /* 16 * 1.25^2 */
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        img,
+        .profile-img {
+            max-width: 100%;
+            height: auto;
+            /* 6. Rounded Soft 컴포넌트 스타일 */
+            border-radius: var(--radius-soft);
+        }
+        
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        /* --- 4. 블로그/아티클 레이아웃 (중앙 컨테이너) --- */
+        /* 모바일에서는 메인 컨테이너가 꽉 참 */
+        .main-container {
+            width: 100%;
+            margin: 1rem auto 0 auto;
+            background-color: #fff;
+
+            /* 6. Rounded Soft 컴포넌트 스타일 */
+            border-radius: var(--radius-soft);
+            box-shadow: var(--shadow-soft);
+            
+            padding: 1.5rem;
+        }
+
+        .header-tagline {
+            font-family: var(--font-en);
+            font-size: 1.125rem;
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+
+        /* --- 6. Rounded Soft 컴포넌트 스타일 (버튼) --- */
+        .button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: var(--radius-soft);
+            box-shadow: var(--shadow-soft);
+            font-family: var(--font-en);
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+
+            /* 5. Scale Transform 인터랙션 */
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+        }
+
+        .button:hover {
+            transform: scale(1.05); /* spec: scale() */
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        /* --- 7. CSS Grid Modern 그리드 시스템 (프로젝트 카드) --- */
+        .grid-container {
+            display: grid;
+            /* 3. Mobile First: 기본 1컬럼 */
+            grid-template-columns: 1fr; 
+            /* 7. CSS Grid Modern: 32px 간격 */
+            gap: 2rem; /* 32px */
+        }
+
+        .card {
+            background-color: var(--bg-light);
+            /* 6. Rounded Soft 컴포넌트 스타일 */
+            border-radius: var(--radius-soft);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            overflow: hidden; /* 모서리 처리 */
+            
+            /* 6. Rounded Soft: 호버 효과 */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+        }
+        
+        .card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* --- 푸터 --- */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+
+        /* --- 3. Mobile First: 데스크탑 브레이크포인트 --- */
+        /* min-width 기준 */
+        @media (min-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+
+            /* 4. 블로그/아티클 레이아웃: max-width 768px */
+            .main-container {
+                max-width: 768px;
+                margin: 2rem auto;
+                padding: 3rem;
+            }
+
+            /* 7. CSS Grid Modern: 
+               - auto-fit: 자동 맞춤
+               - minmax(250px, 1fr): 최소 250px, 최대 1fr
+            */
+            .grid-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>홍길동 <span lang="en">(Gildong Hong)</span></h1>
+        <p class="header-tagline" lang="en">Creative Front-End Developer</p>
+    </header>
+
+    <!-- 4. 블로그/아티클 레이아웃 (중앙 컨테이너) -->
+    <main class="main-container">
+
+        <!-- 자기소개 섹션 -->
+        <section id="about">
+            <h2>소개 <span lang="en">(About Me)</span></h2>
+            <p>
+                안녕하세요! 사용자 경험(UX)과 아름다운 디자인을 코드로 구현하는 것을 좋아하는 프론트엔드 개발자 홍길동입니다. 
+                저는 기술적인 도전을 즐기며, 특히 반응형 웹 디자인과 인터랙티브한 UI 구현에 큰 관심을 가지고 있습니다.
+                이 포트폴리오는 2025년 11월 6일자 UI 디자인 시스템 명세서를 기반으로 제작되었습니다.
+            </p>
+            <p>
+                'Sunset Orange' 컬러 팔레트와 'Modern Sans' 폰트 시스템을 적용하여 
+                가독성과 시각적 즐거움을 동시에 추구했습니다.
+            </p>
+        </section>
+
+        <!-- 프로젝트 섹션 (CSS Grid 적용) -->
+        <section id="projects">
+            <h2>프로젝트 <span lang="en">(Projects)</span></h2>
+            
+            <!-- 7. CSS Grid Modern 그리드 시스템 -->
+            <div class="grid-container">
+                
+                <!-- 6. Rounded Soft 컴포넌트 (카드) -->
+                <div class="card">
+                    <h3><span lang="en">Project Sunset</span></h3>
+                    <p>
+                        'Sunset Orange' 팔레트를 메인으로 사용한
+                        E-commerce 웹사이트입니다. CSS Grid와 Flexbox를 활용하여
+                        유연한 반응형 레이아웃을 구현했습니다.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3><span lang="en">Modern Grid Blog</span></h3>
+                    <p>
+                        'CSS Grid Modern' 시스템을 적용하여 제작한 개인 블로그입니다. 
+                        'auto-fit'과 'minmax'를 활용하여 콘텐츠 중심의
+                        유연한 레이아웃을 완성했습니다.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3><span lang="en">Soft Components UI Kit</span></h3>
+                    <p>
+                        'Rounded Soft' 스타일 가이드를 기반으로 제작한
+                        React 컴포넌트 라이브러리입니다. 12px 모서리 둥글기와
+                        부드러운 그림자 효과를 적용했습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 연락처 섹션 (버튼 인터랙션 적용) -->
+        <section id="contact">
+            <h2>연락하기 <span lang="en">(Contact)</span></h2>
+            <p>
+                제 작업물에 대해 더 궁금한 점이 있거나 협업을 원하신다면 언제든지 연락주세요. 
+                'Scale Transform' 인터랙션이 적용된 아래 버튼을 클릭해 메일을 보낼 수 있습니다.
+            </p>
+            <a href="mailto:example@email.com" class="button">
+                메일 보내기 <span lang="en">(Send Email)</span>
+            </a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Gildong Hong. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
